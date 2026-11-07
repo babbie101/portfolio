@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>babbie // student-portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="layout">
+    
+    <!-- LEFT FILE SIDEBAR -->
+    <aside class="sidebar">
+      <div class="repo-tag">// repository</div>
+      <div class="repo-title">// student-portfolio</div>
+      <div class="divider"></div>
+      
+      <ul class="file-list">
+        <li><button class="file-link active" onclick="showSection('about')"><span class="bullet">•</span> // index.md</button></li>
+        <li><button class="file-link" onclick="showSection('about')"><span class="bullet">•</span> // about-me.md</button></li>
+        <li><button class="file-link" onclick="showSection('github')"><span class="bullet">•</span> // github-repos.md</button></li>
+        <li><button class="file-link" onclick="showSection('learning')"><span class="bullet">•</span> // learning-log.md</button></li>
+        <li><button class="file-link" onclick="showSection('contact')"><span class="bullet">•</span> // contact.md</button></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button id="themeToggle" class="theme-btn">theme: 🌙</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT VIEWPORT -->
+    <main class="content">
+      
+      <!-- HERO / ABOUT SECTION -->
+      <section id="section-about" class="section active">
+        <div class="sub-tag">// student / developer in progress</div>
+        <h1 class="main-name">babbie</h1>
+        <p class="hero-desc">
+          A computer science student building small things, writing notes, and learning in public.
+        </p>
+
+        <div class="hero-links">
+          <a href="#github-repos" onclick="showSection('github')">Explore my projects ↗</a>
+          <a href="#contact" onclick="showSection('contact')">Get in touch ↗</a>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="sub-tag">// 01 / about me</div>
+        <h2 class="section-heading">Curious by nature. A student by day. Always working on something small.</h2>
+        <p class="body-text">
+          I'm a computer science student building web projects and machine learning systems from scratch. Right now
