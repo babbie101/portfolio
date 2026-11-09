@@ -1,4 +1,20 @@
-/* RESET & BASE LAYOUT */
+/* --------------------------------------------------
+   1. RESET & COLOR VARIABLES
+   -------------------------------------------------- */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #1c1c1a;
+  --muted-color: #787774;
+  --border-color: #e5e5e5; /* Subtle border for light mode */
+}
+
+body.dark-theme {
+  --bg-color: #121212;
+  --text-color: #e5e5e5;
+  --muted-color: #888888;
+  --border-color: #262626; /* Dark hairline border matching Paco's aesthetic */
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -10,14 +26,17 @@ body {
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 4rem; /* Keeps content from being covered by the bottom bar */
-  background-color: #ffffff;
-  color: #1c1c1a;
+  padding-bottom: 4rem; /* Keeps content from overlapping the bottom bar */
+  background-color: var(--bg-color);
+  color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* MAIN LAYOUT WRAPPER */
+/* --------------------------------------------------
+   2. MAIN LAYOUT CONTAINER
+   -------------------------------------------------- */
 .layout {
   display: flex;
   gap: 3rem;
@@ -28,7 +47,9 @@ body {
   box-sizing: border-box;
 }
 
-/* SIDEBAR STYLING */
+/* --------------------------------------------------
+   3. SIDEBAR STYLING & ACTIVE STATES
+   -------------------------------------------------- */
 .sidebar {
   width: 200px;
   flex-shrink: 0;
@@ -42,32 +63,33 @@ body {
 
 .nav-links p {
   font-family: monospace;
-  color: #787774;
+  color: var(--muted-color);
   margin-bottom: 0.5rem;
   cursor: pointer;
   transition: color 0.15s ease;
 }
 
-/* SIDEBAR HOVER & ACTIVE STATES */
 .nav-links p:hover,
 .nav-links p.active {
-  color: #1c1c1a;
+  color: var(--text-color);
   font-weight: 600;
 }
 
-/* MAIN CONTENT AREA */
+/* --------------------------------------------------
+   4. MAIN CONTENT AREA & SPA TOGGLING
+   -------------------------------------------------- */
 .content {
   flex: 1;
 }
 
 .content .tag {
   font-family: monospace;
-  color: #787774;
+  color: var(--muted-color);
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
-/* HIDE/SHOW SPA SECTION LOGIC */
+/* Section Hiding/Showing Logic */
 .content section {
   display: none;
 }
@@ -76,7 +98,9 @@ body {
   display: block;
 }
 
-/* FIXED BOTTOM BAR (LOCKED TO BOTTOM SCREEN EDGE) */
+/* --------------------------------------------------
+   5. FIXED BOTTOM FOOTER WITH TOP BORDER LINE
+   -------------------------------------------------- */
 .bottom-bar {
   position: fixed;
   bottom: 0;
@@ -84,17 +108,55 @@ body {
   width: 100%;
   padding: 1rem 2rem;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: var(--bg-color);
+  border-top: 1px solid var(--border-color); /* TOP SEPARATOR LINE */
   z-index: 1000;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.bottom-bar-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .clock-widget {
   display: flex;
   align-items: center;
-  color: #787774;
+  color: var(--muted-color);
 }
 
-/* SVG ROTATION PIVOT FOR CLOCK HANDS */
+/* SVG Clock Hand Rotation Pivot */
 #hour-hand, #min-hand {
   transform-origin: 12px 12px;
+}
+
+/* Theme Toggle Button Styling */
+#theme-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--muted-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+#theme-toggle:hover {
+  color: var(--text-color);
+}
+
+/* SVG Icon Swapping Logic for Theme Toggle */
+.icon-moon {
+  display: none;
+}
+
+body.dark-theme .icon-sun {
+  display: none;
+}
+
+body.dark-theme .icon-moon {
+  display: block;
 }
