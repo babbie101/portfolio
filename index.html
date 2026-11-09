@@ -3,11 +3,59 @@
 <head>
   <meta charset="UTF-8">
   <title>mahdi miah // student-portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>// mahdi miah</h1>
-  <p>CS student building small web projects and learning ML.</p>
+  <div class="layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+      <h1>// mahdi miah</h1>
+      <nav class="nav-links">
+        <p onclick="showSection('about')">// about me</p>
+        <p onclick="showSection('github')">// github-repos</p>
+        <p onclick="showSection('learning')">// learning log</p>
+        <p onclick="showSection('contact')">// contact</p>
+      </nav>
+    </aside>
 
+    <!-- RIGHT MAIN CONTENT -->
+    <main class="content">
+
+      <!-- 1. ABOUT ME SECTION (Shows by default) -->
+      <section id="about" class="active">
+        <p class="tag">// 01 / about me</p>
+        <h2>Mahdi Miah</h2>
+        <p>Computer Science student building web projects from scratch and exploring Machine Learning.</p>
+      </section>
+
+      <!-- 2. GITHUB REPOS SECTION -->
+      <section id="github">
+        <p class="tag">// 02 / github repos</p>
+        <h2>Live Repositories</h2>
+        <p>Loading projects dynamically from GitHub...</p>
+      </section>
+
+      <!-- 3. LEARNING LOG SECTION -->
+      <section id="learning">
+        <p class="tag">// 03 / learning log</p>
+        <h2>What I'm Learning</h2>
+        <p>Currently working through data science fundamentals and building hands-on ML projects.</p>
+      </section>
+
+      <!-- 4. CONTACT SECTION -->
+      <section id="contact">
+        <p class="tag">// 04 / contact</p>
+        <h2>Get in Touch</h2>
+        <p>Connect with me on GitHub or drop a message.</p>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- LINK JAVASCRIPT FILE AT THE BOTTOM -->
+  <script src="script.js"></script>
 </body>
 </html>

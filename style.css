@@ -1,43 +1,44 @@
-/* ==========================================================================
-   1. CSS VARIABLES (Theme Colors & Typography)
-   ========================================================================== */
-:root {
-  /* Light Mode Colors */
-  --bg-color: #f7f7f6;
-  --text-main: #1c1c1a;
-  --text-muted: #787774;
-  --border-color: #e3e3e0;
-  --chip-bg: #ecece9;
-  
-  /* Fonts */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-  --font-mono: "SF Mono", "Fira Code", "JetBrains Mono", monospace;
+/* Make the layout wrapper sit side-by-side */
+.layout {
+  display: flex;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
 }
 
-/* Dark Mode Theme Overrides */
-[data-theme="dark"] {
-  --bg-color: #0f0f0e;
-  --text-main: #e6e6e3;
-  --text-muted: #8c8b88;
-  --border-color: #262624;
-  --chip-bg: #1f1f1d;
+/* Give the sidebar a set width */
+.sidebar {
+  width: 200px;
 }
 
-/* ==========================================================================
-   2. GLOBAL RESET & BASE STYLES
-   ========================================================================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Make sidebar file links look like code */
+.nav-links p {
+  font-family: monospace;
+  color: #787774;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
 }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-family: var(--font-sans);
+/* Highlight active text */
+.nav-links p:hover {
+  color: #1c1c1a;
+}
+
+/* Style the main content viewport */
+.content {
+  flex: 1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
-  font-size: 0.925rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #1c1c1a;
 }
 
+/* Hide all sections by default */
+.content section {
+  display: none;
+}
+
+/* Only display the section with the active class */
+.content section.active {
+  display: block;
+}
