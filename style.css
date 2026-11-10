@@ -5,14 +5,14 @@
   --bg-color: #ffffff;
   --text-color: #1c1c1a;
   --muted-color: #787774;
-  --border-color: #e5e5e5; /* Subtle border for light mode */
+  --border-color: #e5e5e5;
 }
 
 body.dark-theme {
   --bg-color: #121212;
   --text-color: #e5e5e5;
   --muted-color: #888888;
-  --border-color: #262626; /* Dark hairline border matching Paco's aesthetic */
+  --border-color: #262626;
 }
 
 html, body {
@@ -26,7 +26,7 @@ body {
   flex-direction: column;
   min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 4rem; /* Keeps content from overlapping the bottom bar */
+  padding-bottom: 4rem;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -76,7 +76,7 @@ body {
 }
 
 /* --------------------------------------------------
-   4. MAIN CONTENT AREA & SPA TOGGLING
+   4. MAIN CONTENT AREA & HOME SECTION STYLING
    -------------------------------------------------- */
 .content {
   flex: 1;
@@ -89,7 +89,6 @@ body {
   margin-bottom: 0.5rem;
 }
 
-/* Section Hiding/Showing Logic */
 .content section {
   display: none;
 }
@@ -98,8 +97,41 @@ body {
   display: block;
 }
 
+/* Minimalist Home Title & Subtitle */
+.home-header {
+  margin-bottom: 1rem;
+}
+
+.home-header h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0.2rem 0 0.4rem 0;
+}
+
+.home-header p {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--muted-color);
+  margin: 0;
+}
+
+/* Borderless Floating Canvas Wrapper */
+.graphic-wrapper {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+canvas#constellation-canvas {
+  width: 100%;
+  height: 320px;
+  display: block;
+  cursor: crosshair;
+  box-sizing: border-box;
+}
+
 /* --------------------------------------------------
-   5. FIXED BOTTOM FOOTER WITH TOP BORDER LINE
+   5. FIXED BOTTOM FOOTER & CLOCK ROTATION FIX
    -------------------------------------------------- */
 .bottom-bar {
   position: fixed;
@@ -109,7 +141,7 @@ body {
   padding: 1rem 2rem;
   box-sizing: border-box;
   background-color: var(--bg-color);
-  border-top: 1px solid var(--border-color); /* TOP SEPARATOR LINE */
+  border-top: 1px solid var(--border-color);
   z-index: 1000;
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
@@ -117,7 +149,7 @@ body {
 .bottom-bar-content {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .clock-widget {
@@ -126,12 +158,11 @@ body {
   color: var(--muted-color);
 }
 
-/* SVG Clock Hand Rotation Pivot */
-#hour-hand, #min-hand {
-  transform-origin: 12px 12px;
-}
+/* Clock: thin muted circle, three plain hands */
+.clock-face { stroke: var(--muted-color); }
+.clock-hand { stroke: var(--text-color); }
+.clock-sec { opacity: 0.6; }
 
-/* Theme Toggle Button Styling */
 #theme-toggle {
   background: none;
   border: none;
@@ -148,15 +179,306 @@ body {
   color: var(--text-color);
 }
 
-/* SVG Icon Swapping Logic for Theme Toggle */
-.icon-moon {
-  display: none;
+.icon-moon { display: none; }
+body.dark-theme .icon-sun { display: none; }
+body.dark-theme .icon-moon { display: block; }
+
+/* --------------------------------------------------
+   6. REPO CARDS (GitHub Projects)
+   -------------------------------------------------- */
+.repo-card {
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  transition: border-color 0.15s ease, transform 0.1s ease;
 }
 
-body.dark-theme .icon-sun {
-  display: none;
+.repo-card:hover {
+  border-color: var(--text-color);
+  transform: translateY(-1px);
 }
 
-body.dark-theme .icon-moon {
+.repo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.repo-title {
+  font-family: monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.repo-title:hover {
+  text-decoration: underline;
+}
+
+.repo-stars {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--muted-color);
+  white-space: nowrap;
+}
+
+.repo-desc {
+  margin: 0 0 0.5rem;
+  color: var(--muted-color);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.repo-lang {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--muted-color);
+  background: var(--border-color);
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+#repo-list-container .tag {
+  margin-bottom: 0.75rem;
+}
+
+/* --------------------------------------------------
+   7. REPO MODAL (Directory Tree + File Viewer)
+   -------------------------------------------------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalIn 0.15s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-color);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: monospace;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--muted-color);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.modal-close:hover {
+  color: var(--text-color);
+  background: var(--border-color);
+}
+
+.modal-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.modal-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border-color);
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: var(--bg-color);
+}
+
+.modal-main {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  min-width: 0;
+}
+
+.modal-placeholder {
+  color: var(--muted-color);
+  font-family: monospace;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Tree styles */
+.tree-item {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-color);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.1s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-item:hover {
+  background: var(--border-color);
+}
+
+.tree-item.file {
+  color: var(--muted-color);
+}
+
+.tree-item.file:hover {
+  color: var(--text-color);
+}
+
+.tree-item.dir {
+  font-weight: 500;
+}
+
+.tree-item .tree-indent {
+  display: inline-block;
+  width: 1em;
+}
+
+.tree-item .tree-icon {
+  margin-right: 0.4rem;
+  font-family: monospace;
+}
+
+/* File viewer */
+.file-viewer {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  background: var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow: auto;
+  max-height: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Rendered markdown content (e.g. README.md) */
+.file-viewer-rendered {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  background: var(--bg-color);
+  color: var(--text-color);
+  border-radius: 6px;
+  padding: 1rem;
+  overflow: auto;
+  white-space: normal;
+}
+
+/* Inline images in the file viewer */
+.image-viewer {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   display: block;
+  border-radius: 6px;
+}
+
+.file-viewer-header {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--muted-color);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.file-viewer .line-number {
+  color: var(--muted-color);
+  margin-right: 1rem;
+  user-select: none;
+  display: inline-block;
+  width: 2.5rem;
+  text-align: right;
+}
+
+/* Loading state */
+.modal-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--muted-color);
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .modal-content {
+    max-height: 95vh;
+  }
+  .modal-body {
+    flex-direction: column;
+  }
+  .modal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-color);
+    max-height: 40vh;
+  }
 }
