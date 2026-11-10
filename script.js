@@ -343,20 +343,52 @@ async function fetchAndShowFile(path, sha) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
     const blob = await response.json();
-    const content = blob.content.replace(/\n/g, '');
+    const base64 = blob.content.replace(/[^A-Za-z0-9+/=]/g, '');
     const ext = path.split('.').pop().toLowerCase();
     const mime = getImageMime(ext);
 
     if (mime) {
-      const dataUrl = `data:${mime};base64,${content}`;
+      const dataUrl = `data:${mime};base64,${base64}`;
       showImageContent(path, dataUrl, blob.size);
       return;
     }
 
+    const bytes = base64ToBytes(base64);
+    const content = decodeBytes(bytes);
     showFileContent(path, content);
   } catch (error) {
     console.error('Failed to fetch file:', error);
     fileViewer.innerHTML = `<p class="tag" style="color: var(--muted-color);">Failed to load file: ${error.message}</p>`;
+  }
+}
+
+/* ---- base64 + text decoding helpers (handles UTF-8, UTF-16, UTF-32) ---- */
+function base64ToBytes(base64) {
+  const bin = atob(base64);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i += 1) {
+    bytes[i] = bin.charCodeAt(i) & 0xFF;
+  }
+  return bytes;
+}
+
+function decodeBytes(bytes) {
+  if (bytes[0] === 0xFF && bytes[1] === 0xFE) {
+    if (bytes[2] === 0x00 && bytes[3] === 0x00 && bytes[4] === 0xFF && bytes[5] === 0xFF) {
+      return new TextDecoder('utf-32le').decode(bytes.slice(4));
+    }
+    return new TextDecoder('utf-16le').decode(bytes.slice(2));
+  }
+  if (bytes[0] === 0x00 && bytes[1] === 0x00 && bytes[2] === 0xFE && bytes[3] === 0xFF) {
+    return new TextDecoder('utf-32be').decode(bytes.slice(4));
+  }
+  if (bytes[0] === 0xEF && bytes[1] === 0xBB && bytes[2] === 0xBF) {
+    return new TextDecoder('utf-8').decode(bytes.slice(3));
+  }
+  try {
+    return new TextDecoder('utf-8').decode(bytes);
+  } catch (e) {
+    return new TextDecoder('windows-1252').decode(bytes);
   }
 }
 
