@@ -16,15 +16,19 @@ body.dark-theme {
 }
 
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
+}
+
+html {
+  min-height: 100%;
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: auto;
   box-sizing: border-box;
   padding-bottom: 4rem;
   background-color: var(--bg-color);
@@ -51,8 +55,14 @@ body {
    3. SIDEBAR STYLING & ACTIVE STATES
    -------------------------------------------------- */
 .sidebar {
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
   flex: 0 0 200px;
+  box-sizing: border-box;
   overflow: hidden;
+  border-right: 1px solid var(--border-color);
+  padding-right: 1rem;
   transition: flex-basis 0.2s ease;
 }
 
@@ -94,6 +104,7 @@ body {
 
 .layout.sidebar-collapsed .sidebar {
   flex-basis: 2.75rem;
+  padding-right: 0.5rem;
 }
 
 .layout.sidebar-collapsed .sidebar-header {
@@ -103,6 +114,11 @@ body {
 .layout.sidebar-collapsed .sidebar h1,
 .layout.sidebar-collapsed .nav-links {
   display: none;
+}
+
+.layout.sidebar-collapsed .content {
+  font-size: 1.05rem;
+  transition: font-size 0.2s ease;
 }
 
 .nav-links p {
