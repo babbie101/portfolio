@@ -73,19 +73,19 @@ body {
 
 .sidebar-toggle {
   flex-shrink: 0;
-  padding: 0.15rem 0.35rem;
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
+  padding: 0;
+  border: 0;
   background: transparent;
   color: var(--muted-color);
   font-family: monospace;
+  font-size: 1.25rem;
+  line-height: 1;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition: color 0.15s ease;
 }
 
 .sidebar-toggle:hover {
   color: var(--text-color);
-  border-color: var(--text-color);
 }
 
 .layout.sidebar-collapsed {

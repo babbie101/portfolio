@@ -17,7 +17,7 @@ function toggleSidebar() {
 
   toggle.setAttribute('aria-expanded', String(!isCollapsed));
   toggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
-  toggle.textContent = isCollapsed ? '[+]' : '[-]';
+  toggle.textContent = isCollapsed ? '+' : '-';
 }
 
 // --------------------------------------------------
