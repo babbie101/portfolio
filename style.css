@@ -62,17 +62,29 @@ body {
 }
 
 .nav-links p {
+  display: flex;
+  align-items: baseline;
   font-family: monospace;
   color: var(--muted-color);
   margin-bottom: 0.5rem;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.nav-links p:hover {
+  transform: translateX(0.2rem);
+}
+
+.nav-tree-prefix {
+  flex: 0 0 3ch;
+  color: var(--muted-color);
 }
 
 .nav-links p:hover,
 .nav-links p.active {
   color: var(--text-color);
   font-weight: 600;
+  transform: translateX(0.35rem);
 }
 
 /* --------------------------------------------------
@@ -95,6 +107,57 @@ body {
 
 .content section.active {
   display: block;
+  animation: section-reveal 0.2s ease-out;
+}
+
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.github-profile-link {
+  display: inline-flex;
+  vertical-align: middle;
+  color: var(--text-color);
+  transition: color 0.15s ease;
+}
+
+.github-profile-link:hover {
+  color: var(--muted-color);
+}
+
+.github-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: currentColor;
+}
+
+.email-link {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  color: var(--text-color);
+  transition: color 0.15s ease;
+}
+
+.email-link:hover {
+  color: var(--muted-color);
+}
+
+.email-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.5;
 }
 
 /* Minimalist Home Title & Subtitle */
