@@ -10,6 +10,16 @@ function showSection(id, element) {
   if (element) element.classList.add('active');
 }
 
+function toggleSidebar() {
+  const layout = document.querySelector('.layout');
+  const toggle = document.getElementById('sidebar-toggle');
+  const isCollapsed = layout.classList.toggle('sidebar-collapsed');
+
+  toggle.setAttribute('aria-expanded', String(!isCollapsed));
+  toggle.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Minimize sidebar');
+  toggle.textContent = isCollapsed ? '[+]' : '[-]';
+}
+
 // --------------------------------------------------
 // 2. THEME TOGGLE
 // --------------------------------------------------

@@ -10,8 +10,11 @@
 <body class="dark-theme">
   <div class="layout">
     <aside class="sidebar">
+      <div class="sidebar-header">
           <h1>mahdi-miah/</h1>
-          <nav class="nav-links" aria-label="Main navigation">
+        <button id="sidebar-toggle" class="sidebar-toggle" type="button" onclick="toggleSidebar()" aria-label="Minimize sidebar" aria-expanded="true" aria-controls="main-navigation">[-]</button>
+      </div>
+      <nav id="main-navigation" class="nav-links" aria-label="Main navigation">
             <p class="active" onclick="showSection('home', this)"><span class="nav-tree-prefix" aria-hidden="true">|--</span> home.html</p>
             <p onclick="showSection('about', this)"><span class="nav-tree-prefix" aria-hidden="true">|--</span> about.html</p>
             <p onclick="showSection('projects', this)"><span class="nav-tree-prefix" aria-hidden="true">|--</span> projects.html</p>
